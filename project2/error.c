@@ -4,7 +4,7 @@
 #include <math.h>
 /*#define double float
 #define sin sinf*/
-#define double long double
+#define double long double // Allows for quick exchange between doubles and long doubles
 // Allows for switching between using floats and doubles easily
 
 // Returns the absolute value of a function
@@ -47,6 +47,7 @@ double trapIntegrate(double (*function)(double), double leftBound, double rightB
 	return ans*(rightBound-leftBound)/(2*binNum);
 }
 
+// Uses Simpson's rule to calculate the integral (not optimized)
 double simpIntegrate(double (*function)(double), double leftBound, double rightBound, int binNum) {
 	return (1.0/3)*(trapIntegrate(function,leftBound,rightBound,binNum)) + (2.0/3)*(midpIntegrate(function,leftBound,rightBound,binNum));
 }
@@ -56,6 +57,7 @@ double sine(double x) {
 	return sin(x);
 }
 
+// Another function that was analyzed
 double sqroot(double x) {
 	return sqrt(x);
 }
@@ -66,9 +68,9 @@ void main() {
 	for(binSize = 2; binSize < 21000000; binSize *= 10) {
 		// printf("%8d %Le\n",binSize,dabs(cos(2) - 1 + leftIntegrate(sine,0,2,binSize)));
 		// printf("%8d %Le\n",binSize,dabs(cos(2) - 1 + midpIntegrate(sine,0,2,binSize)));
-		printf("%8d %Le\n",binSize,dabs(cos(2) - 1 + simpIntegrate(sine,0,2,binSize)));
+		// printf("%8d %Le\n",binSize,dabs(cos(2) - 1 + simpIntegrate(sine,0,2,binSize)));
 		// printf("%8d %Le\n",binSize,dabs(cos(2) - 1 + trapIntegrate(sine,0,2,binSize)));
 		// printf("%8d %Le\n",binSize,dabs((2.0/3)*pow(2,1.5) - 2.0/3 - midpIntegrate(sqroot,1,2,binSize)));
-		// printf("%8d %6f %6f\n",binSize,dabs(1.416147 - leftIntegrate(sine,0,2,binSize)),binSize,dabs(1.416147 - midpIntegrate(sine,0,2,binSize)));
+		printf("%8d %Le\n",binSize,dabs((2.0/3)*pow(2,1.5) - midpIntegrate(sqroot,0,2,binSize)));
 	}
 }
