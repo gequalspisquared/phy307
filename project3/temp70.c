@@ -49,7 +49,7 @@ void main(int argc, char* argv[]) {
 		currentTemp = 100;
 		t           = 0  ;
 		if (*argv[1] == '0') { /* Use Euler's Method */
-			while(t < (5-dt/2)) {
+			while(currentTemp > targetTemp) {
 				// printf("%Lf %Le\n", t, currentTemp);
 				currentTemp += euler(currentTemp, ambientTemp, k, dt);
 				t += dt;
@@ -57,13 +57,14 @@ void main(int argc, char* argv[]) {
 			// printf("%.6Lf %Le\n", t, currentTemp);
 			if (*argv[2] == '1') {
 				// tDone = t - (currentTemp - targetTemp)/(euler(currentTemp, ambientTemp, k, dt)/dt);
-				// tDone = t;
-				printf("%Le %Le\n", dt, dabs(currentTemp - analytic(5)));
+				tDone = t;
+				// printf("%Le %Le\n", dt, dabs(currentTemp - analytic(5)));
+				printf("%Le %Le\n", dt, dabs(analytic(tDone) - targetTemp));
 			}
 		}
 
 		else if (*argv[1] == '1') { /* Use the RK2 Method */
-			while(t < (5-dt/2)) {
+			while(currentTemp > targetTemp) {
 				// printf("%.6Lf %Le\n", t, currentTemp);
 				currentTemp += runge(currentTemp, ambientTemp, k, dt);
 				t += dt;
@@ -72,8 +73,8 @@ void main(int argc, char* argv[]) {
 			if (*argv[2] == '1') {
 				tDone = t - (currentTemp - targetTemp)/(runge(currentTemp, ambientTemp, k, dt)/dt);
 				// tDone = t - (currentTemp - targetTemp)/(euler(currentTemp, ambientTemp, k, dt)/dt);
-				// printf("The temperature reached 70 degrees at: %.15Le min\n",tDone);
-				printf("%Le %Le\n", dt, dabs(currentTemp - analytic(5)));
+				// printf("%Le %Le\n", dt, dabs(currentTemp - analytic(5)));
+				printf("%Le %Le\n", dt, dabs(analytic(tDone) - targetTemp));
 			}
 		}
 
