@@ -10,22 +10,30 @@ static double L  = 10;
 static double dt = 1e-6;
 
 /* Returns the absolute value of a double */
-int dabs(double x) {
+int zabs(double x) {
 	if (x < 0)
 		return 0;
 	return 1;
+}
+
+double dabs(double x) {
+	if (x < 0)
+		return -x;
+	return x;
 }
 
 /* Returns the angular acceleration of the pendulum */
 double alpha(double theta) {return -g/L*sin(theta);}
 
 void main(int argc, char* argv[]) {
-	double theta = M_PI/20736; /* initial theta, must be in radians */
+	// double theta = M_PI/20736; /* initial theta, must be in radians */
+	double theta = 1e-12; /* used for testing small angle approximation */
 	double omega = 0;
 	double t = 0;
 	double t1 = 0, t2 = 0;
 	double x, y;
 	double period;
+	double T = 2*M_PI*sqrt(L/g);
 	int sign ;
 
 	while(t < 1e1) { /* loops through the simulation */
@@ -48,20 +56,20 @@ void main(int argc, char* argv[]) {
 
 		else {}
 
-		sign = dabs(omega);
+		sign = zabs(omega);
 		theta += omega*dt/2;
 		omega += alpha(theta)*dt;
 		theta += omega*dt/2;
 		t += dt;
 
-		if (dabs(omega) != sign) {
+		if (zabs(omega) != sign) {
 			if (t == dt)
 				continue;
 			if (t1 < dt) {
-				t1 = t;
+				t1 = t - omega/alpha(theta);
 			}
 			else if (t2 < dt) {
-				t2 = t;
+				t2 = t - omega/alpha(theta);
 				period = (t2-t1)*2;
 			}
 		}
@@ -86,5 +94,6 @@ void main(int argc, char* argv[]) {
 
 	else {}
 
-	printf("%Le %Le %.12Le\n", t1, t2, period);
+	printf("%Le %Le %.15Le\n", t1, t2, period);
+	printf("%Le\n",dabs(T-period));
 }
