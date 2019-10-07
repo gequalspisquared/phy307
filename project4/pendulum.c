@@ -20,11 +20,12 @@ int dabs(double x) {
 double alpha(double theta) {return -g/L*sin(theta);}
 
 void main(int argc, char* argv[]) {
-	double theta = M_PI/144; /* initial theta, must be in radians */
+	double theta = M_PI/20736; /* initial theta, must be in radians */
 	double omega = 0;
 	double t = 0;
 	double t1 = 0, t2 = 0;
 	double x, y;
+	double period;
 	int sign ;
 
 	while(t < 1e1) { /* loops through the simulation */
@@ -48,22 +49,20 @@ void main(int argc, char* argv[]) {
 		else {}
 
 		sign = dabs(omega);
-		theta += omega*dt;
+		theta += omega*dt/2;
 		omega += alpha(theta)*dt;
+		theta += omega*dt/2;
 		t += dt;
 
 		if (dabs(omega) != sign) {
 			if (t == dt)
 				continue;
-			printf("dabs(omega) = %d, sign = %d\n",dabs(omega),sign);
-
 			if (t1 < dt) {
-				printf("t1 = %Le\n",t);
 				t1 = t;
 			}
 			else if (t2 < dt) {
-				printf("t2 = %Le\n",t);
 				t2 = t;
+				period = (t2-t1)*2;
 			}
 		}
 	}
@@ -87,5 +86,5 @@ void main(int argc, char* argv[]) {
 
 	else {}
 
-	printf("%Le %Le %Le\n", t1, t2, (t2-t1)*2);
+	printf("%Le %Le %.12Le\n", t1, t2, period);
 }
