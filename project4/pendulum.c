@@ -33,14 +33,15 @@ void main(int argc, char* argv[]) {
 	double dt = 1e-6;
 	double t1 = 0, t2 = 0;
 	double x, y;
-	double period;
+	double period = 0;
 	double T = 2*M_PI*sqrt(L/g);
 	int sign ;
 
-	for(thetaMax = 1e-6; thetaMax < 2; thetaMax *= 10) {
+	for(thetaMax = 0.1; thetaMax < 3.1; thetaMax += 0.1) {
 		theta = thetaMax;
 		t = t1 = t2 = 0;
-		while(t < 1e1) { /* loops through the simulation */
+		period = 0;
+		while(period == 0) { /* loops through the simulation */
 			if (*argv[1] == '1') { /* this section is just used for anim */
 				x = L*sin(theta);
 				y = -L*cos(theta);
@@ -79,9 +80,9 @@ void main(int argc, char* argv[]) {
 				}
 			}
 		}
-		printf("%Le %Le\n", period, fractionalPeriod);
-		if (thetaMax > 0.9)
-			thetaMax /= 5;
+		printf("%Le %Le\n", thetaMax, fractionalPeriod);
+		// if (thetaMax > 0.9)
+		// 	thetaMax /= 5;
 	}
 
 	if (*argv[1] == '1') { /* this section is just used for anim */
