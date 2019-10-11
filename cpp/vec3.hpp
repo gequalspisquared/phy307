@@ -15,7 +15,7 @@ class vec3d
 		double get_j() {return j;}
 		double get_k() {return k;} 
 
-		inline vec3d operator+(vec3d &vector)
+		inline vec3d operator+(vec3d vector)
 		{
 			double x = i + vector.get_i();
 			double y = j + vector.get_j();
@@ -30,7 +30,7 @@ class vec3d
 			k += vector.get_k();
 		}
 
-		inline vec3d operator-(vec3d &vector)
+		inline vec3d operator-(vec3d vector)
 		{
 			double x = i - vector.get_i();
 			double y = j - vector.get_j();
@@ -41,12 +41,9 @@ class vec3d
 		inline vec3d operator*(double scalar)
 		{
 			return vec3d(scalar*i,scalar*j,scalar*k);
-			// i *= scalar;
-			// j *= scalar;
-			// k *= scalar;
 		}
 
-		inline vec3d operator*(vec3d &vector)
+		inline vec3d operator*(vec3d vector)
 		{
 			return vec3d(vector.get_i()*i,vector.get_j()*j,vector.get_k()*k);
 		}
@@ -56,14 +53,14 @@ class vec3d
 			return sqrt(i*i+j*j+k*k);
 		}
 
-		double dot(vec3d &vec) 
+		double dot(vec3d vec) 
 		{
 			return i*vec.get_i()+
 				   j*vec.get_j()+
 				   k*vec.get_k();
 		}
 
-		vec3d cross(vec3d &vec)
+		vec3d cross(vec3d vec)
 		{
 			double x,y,z;
         	x = (j*vec.get_k())-(k*vec.get_j());
