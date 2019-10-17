@@ -28,6 +28,7 @@ class Body
 			m = mass;
 			r = radius;
 		}
+		~Body() {}
 };
 
 /* Function for the force of gravity between two bodies */
