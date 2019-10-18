@@ -9,7 +9,7 @@ Written by Nicholas Crane
 #define double long double
 
 /* Parameters affecting the string */
-static int N = 1001; // the number of nodes
+static int N = 501; // the number of nodes
 static double mu = 0.1; // the linear mass density of the string
 static double Lo = 1; // the length of the unstretched string
 static double k = 1000; // k is equal to the stiffness alpha
@@ -38,21 +38,31 @@ vec3d springForce(vec3d pos1, vec3d pos, vec3d pos2, double ro)
 
 int main()
 {
-    double m = mu*Lo/N;
-    double ro = Lo/(N-1);
-    double L = (T/k) + Lo;
+    double m = mu*Lo/N; // mass of each node
+    double ro = Lo/(N-1); // neutral distance between each node
+    double L = (T/k) + Lo; // length of stretched wire
+    double height = 0.1; // height of displaced point
     float dt = 0.0001;
     float t = 0;
     int i,j;
 
+    /* Sets up initial conditions for each node */
     Node node[N];
     for(i = 0; i < N; i++)
     {
-        node[i] = Node(vec3d(i*(L/(N-1.0)) - L/2,0,0),vec3d(0,0,0));
-        if (i == ((N+1)/2)-1)
+        if(i < ((N+2)/2)-1)
         {
-            node[i] = Node(vec3d(i*(L/(N-1.0)) - L/2,0.1,0),vec3d(0,0,0));
+            node[i] = Node(vec3d(i*(L/(N-1.0)) - L/2,height*i/(N/2),0),vec3d(0,0,0));
         }
+        else if(i == ((N+1)/2)-1)
+        {
+            node[i] = Node(vec3d(i*(L/(N-1.0)) - L/2,height,0),vec3d(0,0,0));
+        }
+        else
+        {
+            node[i] = Node(vec3d(i*(L/(N-1.0)) - L/2,-height*(i-N/2)/(N/2) + height,0),vec3d(0,0,0));
+        }
+        
     }
 
     // while(t < 0.1)
@@ -83,5 +93,4 @@ int main()
         // printf("!%Le\n",node[1].v.get_j());
         printf("F\n");
     }
-
 }
