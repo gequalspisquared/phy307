@@ -9,12 +9,12 @@ Written by Nicholas Crane
 #define double long double
 
 /* Parameters affecting the string */
-static int N = 501; // the number of nodes
+static int N = 21; // the number of nodes
 static double mu = 0.1; // the linear mass density of the string
 static double Lo = 1; // the length of the unstretched string
 static double k = 1000; // k is equal to the stiffness alpha
 static double T = 1000; // initial tension along the string
-static double r = 5e-3; // the radius of each node
+static double r = 10e-3; // the radius of each node
 
 /* A class containing the info for each node */
 class Node 
@@ -41,7 +41,8 @@ int main()
     double m = mu*Lo/N; // mass of each node
     double ro = Lo/(N-1); // neutral distance between each node
     double L = (T/k) + Lo; // length of stretched wire
-    double height = 0.1; // height of displaced point
+    double height = 0.5; // height of displaced point
+    double energy;
     float dt = 0.0001;
     float t = 0;
     int i,j;
@@ -83,6 +84,11 @@ int main()
 			node[i].s += node[i].v*(dt/2);
 		}
 
+        energy = pow((node[1].s-node[0].s).mag(),2)*(k/2); // calculate the total elastic potential energy in the spring
+        for(i = 1; i < (N-1); i++)
+        {
+            energy += pow((node[i+1].s-node[i].s).mag(),2)*(k/2);
+        }
 
         t += dt;
         for(i = 0; i < N; i++)
@@ -91,6 +97,8 @@ int main()
         }
 
         // printf("!%Le\n",node[1].v.get_j());
+        printf("T -0.9 0.8\n");
+        printf("U = %Le\n",energy);
         printf("F\n");
     }
 }
