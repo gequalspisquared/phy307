@@ -1,0 +1,36 @@
+
+
+*******************************************************************************
+Sun Dec 15 13:12:25 2019
+
+
+FIT:    data read from "damp.txt" u 1:2
+        format = x:z
+        #datapoints = 133
+        residuals are weighted equally (unit weight)
+
+function used for fitting: f(x)
+	f(x) = m*x + b
+fitted parameters initialized with current variable values
+
+iter      chisq       delta/lim  lambda   m             b            
+   0 1.5814955717e+05   0.00e+00  2.45e+01    1.000000e+00   1.000000e+00
+   5 7.5446421791e-04  -1.61e-09  2.45e-04   -7.192930e-06   1.116594e+00
+
+After 5 iterations the fit converged.
+final sum of squares of residuals : 0.000754464
+rel. change during last iteration : -1.6095e-14
+
+degrees of freedom    (FIT_NDF)                        : 131
+rms of residuals      (FIT_STDFIT) = sqrt(WSSR/ndf)    : 0.00239985
+variance of residuals (reduced chisquare) = WSSR/ndf   : 5.75927e-06
+
+Final set of parameters            Asymptotic Standard Error
+=======================            ==========================
+m               = -7.19293e-06     +/- 1.21e-05     (168.2%)
+b               = 1.11659          +/- 0.0004185    (0.03748%)
+
+correlation matrix of the fit parameters:
+                m      b      
+m               1.000 
+b              -0.868  1.000 
